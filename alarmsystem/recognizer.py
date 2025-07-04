@@ -1,27 +1,26 @@
 from deepface import DeepFace
 import time
+import os
 from picamera2 import Picamera2
 
 camera = Picamera2
-
+currdir = os.getcwd()
 still_config = camera.create_still_configuration(
 
 )
 video_config = camera.create_video_configuration()
 
-def capture_at_door(location: str = '.') -> str:
+def capture_at_door(location: str = currdir+"\\resources") -> str:
+    filename = location+'\\temp.jpg'
     # take pic
-    camera.start_and_capture_file(location+'\\temp.jpg')
+    camera.start_and_capture_file(filename)
 
-    # ensure person is in pic
-    
     # return pic path
-    return location+'\\temp.jpg'
+    return filename
 
-def find_match(img1_path: str, db_folder: str, model: str = 'VGG-Face', detector: str = 'openCV', sure_detect: bool = False, spoofing: bool = True) -> bool:
+def find_match(img1_path: str, db_folder: str = currdir+"\\resources\\face_database", model: str = 'VGG-Face', detector: str = 'openCV', sure_detect: bool = False, spoofing: bool = True) -> bool:
     df_find = DeepFace.find(img1_path, db_folder,model_name=model, detector_backend=detector, enforce_detection=sure_detect, anti_spoofing=spoofing)[0]
     matches = len(df_find.index)
 
     has_match = True if matches > 0 else False
     return has_match
-
