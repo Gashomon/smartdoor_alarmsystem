@@ -1,6 +1,9 @@
 
 import os
 
+import pandas as pd
+import pickle
+
 os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0'
 
 from deepface import DeepFace as df
@@ -42,9 +45,11 @@ if choice == 3:
     db_found = os.path.exists(db_path1)
 
     if im_found and db_found:
-        result = df.find(img_path1, db_path1)
-        df.represent()
-        print(f"\ngot the results! \n {result}")
+        result = df.find(img_path1, db_path1)[0]
+        for i in result.index.values:
+            location = result.loc[i][0]
+            folder_name = location.split('\\')
+            print(f"\ngot the results! \n {folder_name[len(folder_name)-2]}")
     else:
         print("something went wrong")
 

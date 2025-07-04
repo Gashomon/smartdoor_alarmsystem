@@ -19,10 +19,13 @@ DETECTOR = ''
 def start_system() -> None:
     global os_type
     global os_is_raspi
+    global system_dir
+
+    system_dir = sm.get_dir(os_type)
+
     os_type = sm.get_os_type()
     os_is_raspi = True if os_type == ' raspi' else False
 
-    system_dir = sm.get_dir(os_type)
     if os_is_raspi:
        sm.attach_sleeper()
 
@@ -30,6 +33,7 @@ def start_system() -> None:
     fbr.fetch_db()
 
 def deactivate_system() -> None:
+    sm.unset_oneddn()
     sm.dettach_sleeper()
     pass
 
