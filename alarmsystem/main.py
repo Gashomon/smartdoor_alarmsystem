@@ -7,9 +7,8 @@ os_type = 'unknown'
 os_is_raspi = False
 system_dir = ''
 
-FIREBASE_NAME = ''
-FIREBASE_CREDENTIALS = ''
-FIREBASE_OPTIONS = ''
+firebase_url = 'https://console.firebase.google.com/u/0/project/door--smart-security/appcheck'
+firebase_credentials = ''
 
 DATABASE_PATH = '\\alarmsystem\\resources\\face_database'
 DETECT_SPOOF = True
@@ -29,8 +28,8 @@ def start_system() -> None:
     if os_is_raspi:
        sm.attach_sleeper()
 
-    fbr.connect_to_db(FIREBASE_NAME, FIREBASE_CREDENTIALS, FIREBASE_OPTIONS)
-    fbr.fetch_db()
+    fbr.connect_to_db(firebase_url, firebase_credentials)
+    fbr.fetch_face_db()
 
 def deactivate_system() -> None:
     sm.unset_oneddn()
