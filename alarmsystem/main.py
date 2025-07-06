@@ -7,8 +7,8 @@ os_type = 'unknown'
 os_is_raspi = False
 system_dir = ''
 
-CRED_PATH = '/alarmsystem/resources/passes.json'
-DATABASE_PATH = '\\alarmsystem\\resources\\face_database'
+CRED_PATH = './alarmsystem/resources/passes.json'
+DATABASE_PATH = './alarmsystem/resources/face_database'
 DETECT_SPOOF = True
 MODEL = ''
 DETECTOR = ''
@@ -26,7 +26,7 @@ def start_system() -> None:
     if os_is_raspi:
        sm.attach_sleeper()
 
-    fbr.connect_to_dbs(system_dir + CRED_PATH)
+    fbr.connect_to_dbs(CRED_PATH)
     # fbr.fetch_face_db()
 
 def deactivate_system() -> None:
@@ -46,8 +46,7 @@ def check_door() -> None:
 def main():
     start_system()
     print(os_type)
-    upl = input("Enter upload path: ")
-    fbr.upload_entry(upl)
+    fbr.update_db()
 
 if __name__ == '__main__':
     main()
