@@ -7,12 +7,7 @@ os_type = 'unknown'
 os_is_raspi = False
 system_dir = ''
 
-firebase_url = 'https://door--smart-security-default-rtdb.asia-southeast1.firebasedatabase.app/'
-firebase_credentials = ''
-
-supabase_url = 'https://tlgkpnmiwlqqkxzoequy.supabase.co'
-supabase_key = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRsZ2twbm1pd2xxcWt4em9lcXV5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE3MzIyNjYsImV4cCI6MjA2NzMwODI2Nn0.SuwdRYjz6yjudrVAQpdj6JxZ8b1rr9hJUjBcJeAM-uY'
-
+CRED_PATH = 'D:/MON Stuff/Work Stuff/SmartDoor/smartdoor_alarmsystem/alarmsystem/resources/passes.json'
 DATABASE_PATH = '\\alarmsystem\\resources\\face_database'
 DETECT_SPOOF = True
 MODEL = ''
