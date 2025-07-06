@@ -4,7 +4,9 @@ import json
 from datetime import datetime as dt
 import os
 
-def connect_to_db(url: str,cred: str, opts: str = None) -> None:
+def load_creds() -> None:
+    pass
+def connect_to_dbs(url: str,cred: str, opts: str = None) -> None:
     cred_json = credentials.Certificate(cred)
     initialize_app(
         cred_json, 
@@ -14,7 +16,6 @@ def connect_to_db(url: str,cred: str, opts: str = None) -> None:
 def check_db_updates(db_path:str, ref_path:str = '/') -> bool:
     ref = db.reference(ref_path)
     ref_conts = ref.get(shallow=True)
-
 
     db_conts = {}
     for folder in os.listdir(db_path):
@@ -26,7 +27,7 @@ def check_db_updates(db_path:str, ref_path:str = '/') -> bool:
         return False
 
 def update_db(db_path:str, ref_path:str = '/') -> None:
-    
+
     pass
 
 def fetch_face_db() -> None:
