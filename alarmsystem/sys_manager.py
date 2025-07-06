@@ -13,7 +13,7 @@ def get_os_type() -> str:
             return 'linux'
 
 def get_dir() -> str:
-    return os.getcwd
+    return os.getcwd()
 
 def attach_sleeper() -> None:
     # set gpio to listen and sleep / wake

@@ -1,13 +1,13 @@
 import sys_manager as sm
-import recognizer as rcg
+# import recognizer as rcg
 import firebaser as fbr
-import arduino_talker as at
+# import arduino_talker as at
 
 os_type = 'unknown'
 os_is_raspi = False
 system_dir = ''
 
-CRED_PATH = 'D:/MON Stuff/Work Stuff/SmartDoor/smartdoor_alarmsystem/alarmsystem/resources/passes.json'
+CRED_PATH = '/alarmsystem/resources/passes.json'
 DATABASE_PATH = '\\alarmsystem\\resources\\face_database'
 DETECT_SPOOF = True
 MODEL = ''
@@ -18,7 +18,7 @@ def start_system() -> None:
     global os_is_raspi
     global system_dir
 
-    system_dir = sm.get_dir(os_type)
+    system_dir = sm.get_dir()
 
     os_type = sm.get_os_type()
     os_is_raspi = True if os_type == ' raspi' else False
@@ -26,8 +26,8 @@ def start_system() -> None:
     if os_is_raspi:
        sm.attach_sleeper()
 
-    fbr.connect_to_db(firebase_url, firebase_credentials)
-    fbr.fetch_face_db()
+    fbr.connect_to_dbs(system_dir + CRED_PATH)
+    # fbr.fetch_face_db()
 
 def deactivate_system() -> None:
     sm.unset_oneddn()
@@ -46,6 +46,8 @@ def check_door() -> None:
 def main():
     start_system()
     print(os_type)
+    upl = input("Enter upload path: ")
+    fbr.upload_entry(upl)
 
 if __name__ == '__main__':
     main()
