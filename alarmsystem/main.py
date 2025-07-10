@@ -1,7 +1,7 @@
 import sys_manager as sm
-# import recognizer as rcg
+import recognizer as rcg
 import firebaser as fbr
-# import arduino_talker as at
+import arduino_talker as at
 
 os_type = 'unknown'
 os_is_raspi = False

@@ -66,7 +66,7 @@ def check_db_updates(db_path:str = LOCAL_DB, ref_path:str = FB_DB) -> bool:
         else:
             # print("whoops")
             pass
-    print(str(db_conts))
+    # print(str(db_conts))
 
     if db_conts == ref_conts:
         print("they equal tho")
