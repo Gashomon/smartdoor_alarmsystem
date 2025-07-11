@@ -13,12 +13,13 @@ const int alrmOffPin = 5;     // raspi alarm off pin (Digital pins)
 const int sleepPin =  7;      // raspi trigger sleep arduino (Digital pins)
 
 // above this is considered activated if sensor is in analog
-const int sensor_threshold = 100;
+// const int sensor_threshold = 100;
 
-// cmd Pin outputs
-const int cmd_max = 255;
-const int cmd_min = 0;
+// cmd Pin outputs if sensor is in analog
+// const int cmd_max = 255;
+// const int cmd_min = 0;
 
+// cmd variables
 bool alarm_on = false;
 bool sleep_on = false;
 
@@ -28,7 +29,7 @@ int sounds_len = sizeof(sound_steps) /sizeof(sound_steps[0]);
 int sound_curr = 0;
 int sound_out = HIGH;
 int sound_timer = millis();
-int sound_time_maxout = 3000;
+int sound_time_maxout = 3000; // should be greater than any value in sound_steps
 
 void setup() {
   pinMode(buzzerPin, OUTPUT);

@@ -1,7 +1,8 @@
 import sys_manager as sm
 import recognizer as rcg
 import firebaser as fbr
-import arduino_talker as at
+
+import time
 
 os_type = 'unknown'
 os_is_raspi = False
@@ -13,7 +14,13 @@ DETECT_SPOOF = True
 MODEL = ''
 DETECTOR = ''
 
+DEFAULT_IMG_PATH = DATABASE_PATH + '/latest.jpg'
+
+system_timer = 0
+
+# called only at start
 def start_system() -> None:
+    " DocString: call to initialize variables of system "
     global os_type
     global os_is_raspi
     global system_dir
@@ -24,29 +31,60 @@ def start_system() -> None:
     os_is_raspi = True if os_type == ' raspi' else False
 
     if os_is_raspi:
-       sm.attach_sleeper()
+        # auto sleep
+        sm.sleep_pi()
 
+    # initiate db
     fbr.connect_to_dbs(CRED_PATH)
-    # fbr.fetch_face_db()
+    fbr.fetch_face_db()
 
+    # system start
+    sm.set_oneddn()
+    sm.set_pins()
+
+# called only at end
 def deactivate_system() -> None:
-    sm.unset_oneddn()
-    sm.dettach_sleeper()
-    pass
+    " DocString: call to gracefully shutdown system "
+    sm.pi_power_off()
 
-def activate_intruder_mechanism() -> None:
-    at.activate_alarm()
-    fbr.notify_app()    
-
+# main system loops
 def check_door() -> None:
     img = rcg.capture_at_door()
     if not rcg.find_match(img):
-        activate_intruder_mechanism()
+        sm.activate_alarm()
+        fbr.upload_entry(img)
+
+def wait_for_people(timeout: int = 10, timeskip: int = 2) -> bool:
+    global system_timer
+    # check some time if there is face
+    # person_detected = rcg.find_face()
+    person_detected = True
+    # if face found run codes, dont allow power off if running other stuff
+    if person_detected:
+        check_door()
+        # after successful run, return True to reset the loop. Reset timer if ever
+        return True
+    else:
+        # if button pressed shutdown
+        manual_off = sm.pi_power_off()
+        if manual_off:
+            return False 
+        
+        # counter increment if timeout reached, sleep pi. Run continuosly until then
+        system_timer += timeskip
+        if system_timer >= timeout:
+            system_timer = 0
+            sm.sleep_pi()
+            return True
+        time.sleep(timeskip)
 
 def main():
     start_system()
-    print(os_type)
-    fbr.update_db()
+    system_continue = True
+    while system_continue:
+        system_continue = wait_for_people()
+
+    deactivate_system()
 
 if __name__ == '__main__':
     main()
