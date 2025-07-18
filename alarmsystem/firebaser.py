@@ -70,10 +70,10 @@ def check_db_updates(db_path:str = LOCAL_DB, ref_path:str = FB_DB) -> bool:
 
     if db_conts == ref_conts:
         print("they equal tho")
-        return True
+        return False
     else:
         print("its wrong")
-        return False
+        return True
 
 def update_db(db_path:str = LOCAL_DB, ref_path:str = FB_DB) -> None:
     # clear database
@@ -81,7 +81,11 @@ def update_db(db_path:str = LOCAL_DB, ref_path:str = FB_DB) -> None:
         shutil.rmtree(db_path + '/'+ directory)
 
     # download new database
+    print("get in " + ref_path)
     ref = db.reference(ref_path).get()
+    if ref is None:
+        return
+    
     for ref_key, user in ref.items():
         # make folder
         print(user['user_name'])
@@ -104,6 +108,7 @@ def update_db(db_path:str = LOCAL_DB, ref_path:str = FB_DB) -> None:
 def fetch_face_db() -> None:
     db_changed = check_db_updates()
     if db_changed:
+        print("updating db...")
         update_db()
 
 def upload_entry(img_path: str, ref_path:str= FB_UPLOADS, sentstuff_dbpath:str = SB_BUCKET) -> None:
@@ -142,3 +147,5 @@ def upload_entry(img_path: str, ref_path:str= FB_UPLOADS, sentstuff_dbpath:str =
             'entry_img_url' : img_url
         }
     )
+
+    print("upload complete")
