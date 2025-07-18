@@ -41,7 +41,7 @@ def start_system() -> None:
 
         # system start
         sm.set_pins()
-        sm.sleep_pi()
+        # sm.sleep_pi()
 
 # called only at end
 def deactivate_system() -> None:
@@ -77,16 +77,16 @@ def wait_for_people(timeout: int = 10, timeskip: int = 2) -> bool:
         system_timer += timeskip
         if system_timer >= timeout:
             system_timer = 0
-            sm.sleep_pi()
+            # sm.sleep_pi()
             return True
-        time.sleep(timeskip)
+        # time.sleep(timeskip)
 
 def main():
     start_system()
     # system_continue = True
     # while system_continue:
     #     system_continue = wait_for_people()
-    fbr.upload_entry("D:/MON Stuff/Work Stuff/SmartDoor/smartdoor_alarmsystem/alarmsystem/resources/captures/3.jpg")
+    # fbr.upload_entry("/home/smartdoor/smartdoor_alarmsystem/alarmsystem/resources/captures/4.jpg")
     deactivate_system()
 
 if __name__ == '__main__':

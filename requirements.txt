@@ -2,3 +2,5 @@ deepface==0.0.93
 firebase_admin==6.9.0
 tf-keras==2.19.0
 supabase==2.16.0
+gpiozero==2.0.1
+picamera2==0.3.27

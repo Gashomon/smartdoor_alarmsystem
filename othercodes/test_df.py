@@ -19,8 +19,11 @@ if choice == 1:
     im2_found = os.path.exists(img_path2)
 
     if im1_found and im2_found:
-        result = df.verify(img_path1, img_path2)
-        print(f"\ngot the results! \n {result}")
+        try:
+            result = df.verify(img_path1, img_path2)
+            print(f"\ngot the results! \n {result}")
+        except Exception as e:
+            print(e)
     else:
         print("something went wrong")
     

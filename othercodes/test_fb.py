@@ -5,16 +5,16 @@ from datetime import datetime as dt
 
 import os
 
-file_path = ''
+file_path = '/home/smartdoor/smartdoor_alarmsystem/alarmsystem/resources/sd_acckey.json'
 find_file = os.path.exists(file_path)
 print("file exists is " + str(find_file))
 cred_json = credentials.Certificate(file_path)
 initialize_app(
     cred_json, 
-    {'databaseURL' : ''})
+    {'databaseURL' : 'https://door--smart-security-default-rtdb.asia-southeast1.firebasedatabase.app/'})
 
 try:
-    ref = db.reference('/')
+    ref = db.reference()
     data = ref.get()
     print("data is this: " + str(data))
     print("data type is " + type(data))

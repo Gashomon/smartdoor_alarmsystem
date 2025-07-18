@@ -3,7 +3,7 @@ import time
 import os
 from picamera2 import Picamera2
 
-camera = Picamera2
+camera = Picamera2()
 currdir = os.getcwd()
 still_config = camera.create_still_configuration()
 # video_config = camera.create_video_configuration()
